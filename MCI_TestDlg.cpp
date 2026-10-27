@@ -66,6 +66,9 @@ BEGIN_MESSAGE_MAP(CMCITestDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CMCITestDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_AUDIOMP3, &CMCITestDlg::OnBnClickedAudiomp3)
+	ON_BN_CLICKED(IDC_AUDIOCD, &CMCITestDlg::OnBnClickedAudiocd)
+	ON_BN_CLICKED(IDC_AUDIOMIDI, &CMCITestDlg::OnBnClickedAudiomidi)
 END_MESSAGE_MAP()
 
 
@@ -158,9 +161,35 @@ HCURSOR CMCITestDlg::OnQueryDragIcon()
 void CMCITestDlg::OnBnClickedButton1()
 {
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+
+	CRect r;
+	GetDlgItem(IDC_DESTIN)->GetWindowRect(r);
+	ScreenToClient(r);
+	mci.OpenFile(L"video.mpg");
+	mci.SetVideoPosition(GetSafeHwnd(),CRect(r.left, r.top, r.Width(), r.Height()));
+	mci.Play();
+}
+
+void CMCITestDlg::OnBnClickedAudiomp3()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
 	
-	static CMCIObject mci; // Membervariable der Dialogklasse
-	mci.OpenFile(L"martinexplaining.mp4");
-	//mci.SetVideoPosition(GetSafeHwnd(), CRect(30, 60, 210, 140));
+	mci.OpenFile(L"audio.mp3");
+	mci.Play();
+}
+
+void CMCITestDlg::OnBnClickedAudiocd()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+	BYTE tracks;
+	mci.OpenAudioCD(0, tracks);
+	mci.TMSFSeek(2, 0, 0, 0);
+	mci.Play();
+}
+
+void CMCITestDlg::OnBnClickedAudiomidi()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+	mci.OpenFile(L"audio.mid");
 	mci.Play();
 }

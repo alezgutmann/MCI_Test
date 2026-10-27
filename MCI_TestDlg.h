@@ -24,6 +24,7 @@ public:
 // Implementierung
 protected:
 	HICON m_hIcon;
+	CMCIObject mci;
 
 	// Generierte Funktionen für die Meldungstabellen
 	virtual BOOL OnInitDialog();
@@ -31,6 +32,11 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+	
 public:
 	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedAudiomp3();
+	afx_msg void OnBnClickedAudiocd();
+	afx_msg void OnBnClickedAudiomidi();
 };
