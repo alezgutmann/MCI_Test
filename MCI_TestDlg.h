@@ -39,4 +39,6 @@ public:
 	afx_msg void OnBnClickedAudiomp3();
 	afx_msg void OnBnClickedAudiocd();
 	afx_msg void OnBnClickedAudiomidi();
+	afx_msg void OnBnClickedAudiowav();
+	afx_msg void OnBnClickedPlay();
 };

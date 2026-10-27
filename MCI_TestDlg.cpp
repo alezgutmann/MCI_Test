@@ -69,6 +69,8 @@ BEGIN_MESSAGE_MAP(CMCITestDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_AUDIOMP3, &CMCITestDlg::OnBnClickedAudiomp3)
 	ON_BN_CLICKED(IDC_AUDIOCD, &CMCITestDlg::OnBnClickedAudiocd)
 	ON_BN_CLICKED(IDC_AUDIOMIDI, &CMCITestDlg::OnBnClickedAudiomidi)
+	ON_BN_CLICKED(IDC_AUDIOWAV, &CMCITestDlg::OnBnClickedAudiowav)
+	ON_BN_CLICKED(IDC_PLAY, &CMCITestDlg::OnBnClickedPlay)
 END_MESSAGE_MAP()
 
 
@@ -165,7 +167,7 @@ void CMCITestDlg::OnBnClickedButton1()
 	CRect r;
 	GetDlgItem(IDC_DESTIN)->GetWindowRect(r);
 	ScreenToClient(r);
-	mci.OpenFile(L"video.mpg");
+	mci.OpenFile(L"test.mpg");
 	mci.SetVideoPosition(GetSafeHwnd(),CRect(r.left, r.top, r.Width(), r.Height()));
 	mci.Play();
 }
@@ -174,8 +176,14 @@ void CMCITestDlg::OnBnClickedAudiomp3()
 {
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
 	
-	mci.OpenFile(L"audio.mp3");
+	mci.OpenFile(L"maus_schokolade_mono.mp3");
 	mci.Play();
+}
+
+void CMCITestDlg::OnBnClickedAudiowav()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+	mci.OpenFile(L"CUCKOO.WAV");
 }
 
 void CMCITestDlg::OnBnClickedAudiocd()
@@ -192,4 +200,11 @@ void CMCITestDlg::OnBnClickedAudiomidi()
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
 	mci.OpenFile(L"audio.mid");
 	mci.Play();
+}
+
+
+
+void CMCITestDlg::OnBnClickedPlay()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
 }
