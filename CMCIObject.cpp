@@ -70,6 +70,7 @@ bool CMCIObject::OpenAudioCD(LPCWSTR drive, BYTE& tracks) {
 		return false;
 	}
 	tracks = (BYTE)status.dwReturn;
+
 	return true;
 }
 

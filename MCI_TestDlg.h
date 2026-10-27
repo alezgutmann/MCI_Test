@@ -41,4 +41,7 @@ public:
 	afx_msg void OnBnClickedAudiomidi();
 	afx_msg void OnBnClickedAudiowav();
 	afx_msg void OnBnClickedPlay();
+	afx_msg void OnBnClickedStop();
+	afx_msg void OnBnClickedClose();
+	afx_msg void OnLbnSelchangeList1();
 };

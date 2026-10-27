@@ -71,6 +71,9 @@ BEGIN_MESSAGE_MAP(CMCITestDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_AUDIOMIDI, &CMCITestDlg::OnBnClickedAudiomidi)
 	ON_BN_CLICKED(IDC_AUDIOWAV, &CMCITestDlg::OnBnClickedAudiowav)
 	ON_BN_CLICKED(IDC_PLAY, &CMCITestDlg::OnBnClickedPlay)
+	ON_BN_CLICKED(IDC_STOP, &CMCITestDlg::OnBnClickedStop)
+	ON_BN_CLICKED(IDC_CLOSE, &CMCITestDlg::OnBnClickedClose)
+	ON_LBN_SELCHANGE(IDC_LIST1, &CMCITestDlg::OnLbnSelchangeList1)
 END_MESSAGE_MAP()
 
 
@@ -169,7 +172,6 @@ void CMCITestDlg::OnBnClickedButton1()
 	ScreenToClient(r);
 	mci.OpenFile(L"test.mpg");
 	mci.SetVideoPosition(GetSafeHwnd(),CRect(r.left, r.top, r.Width(), r.Height()));
-	mci.Play();
 }
 
 void CMCITestDlg::OnBnClickedAudiomp3()
@@ -177,7 +179,6 @@ void CMCITestDlg::OnBnClickedAudiomp3()
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
 	
 	mci.OpenFile(L"maus_schokolade_mono.mp3");
-	mci.Play();
 }
 
 void CMCITestDlg::OnBnClickedAudiowav()
@@ -191,15 +192,22 @@ void CMCITestDlg::OnBnClickedAudiocd()
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
 	BYTE tracks;
 	mci.OpenAudioCD(0, tracks);
-	mci.TMSFSeek(2, 0, 0, 0);
-	mci.Play();
+	
+	BYTE min, sek, frame;
+	((CListBox*)GetDlgItem(IDC_LIST1))->ResetContent();
+	RedrawWindow();
+	for (int i = 1; i <= tracks; i++) {
+		mci.GetTrackLength(i, min, sek, frame);
+		CString temp; // z.B.Eintrag in eine ListBox : -)
+		temp.Format(L"[%02d] %02d:%02d", i, min, sek);
+		((CListBox*)GetDlgItem(IDC_LIST1))->AddString(temp);
+	}
 }
 
 void CMCITestDlg::OnBnClickedAudiomidi()
 {
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
-	mci.OpenFile(L"audio.mid");
-	mci.Play();
+	mci.OpenFile(L"NUTCRACK.MID");
 }
 
 
@@ -207,4 +215,26 @@ void CMCITestDlg::OnBnClickedAudiomidi()
 void CMCITestDlg::OnBnClickedPlay()
 {
 	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+	mci.Play();
+}
+
+
+void CMCITestDlg::OnBnClickedStop()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+
+	// Stop und Pause haben im wesentlichen die gleiche Wirkung, daher hier in "Stop" Pause verwendet
+	mci.Pause();
+}
+
+void CMCITestDlg::OnBnClickedClose()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+	mci.Close();
+}
+
+void CMCITestDlg::OnLbnSelchangeList1()
+{
+	// TODO: Fügen Sie hier Ihren Handlercode für Benachrichtigungen des Steuerelements ein.
+	mci.TMSFSeek(((CListBox*)GetDlgItem(IDC_LIST1))->GetCurSel() + 1, 0, 0, 0);
 }
